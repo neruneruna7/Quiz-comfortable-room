@@ -10,6 +10,8 @@
         }
         .data-display {
             display: flex;
+            height: 40vh;
+            padding: 40px;
             justify-content: space-around;
             margin-bottom: 20px;
             font-size: 24px; /* フォントサイズを大きくする */
@@ -23,9 +25,13 @@
             height: 150px;
             width: 150px;
             padding: 20px 20px; /* ボタンのパディングを増やす */
+            background-color: lightsteelblue;
             background-repeat: no-repeat; /* 画像を繰り返さない */
             background-size: contain; /* 画像を要素にフィットさせる */
             background-position: center; /* 画像を中央に配置 */
+        }
+        button:hover {
+            background-color: lightblue; /* マウスオーバー時の背景色 */
         }
         #doublecircle {
             background-image: url('img/doublecircle.svg'); /* ○の画像 */
@@ -47,12 +53,22 @@
     </header>
 
     <div class="data-display">
-        <div id="co2">CO2濃度: </div>
-        <div id="temp">温度: </div>
-        <div id="humidity">湿度: </div>
+        <div>        
+            <H3>CO2濃度</H3>
+            <div id="co2"></div>
+        </div>
+        <div>        
+            <H3>温度</H3>
+            <div id="temp">温度: </div>
+        </div>
+        <div>        
+            <H3>湿度</H3>
+            <div id="humidity">湿度: </div>
+        </div>
+
     </div>
     <div class="quiz-buttons">
-        <button id="doublecircle" onclick="alert('○が押されました')"></button>
+        <button id="doublecircle" onclick="alert('◎が押されました')"></button>
         <button id="circle" onclick="alert('○が押されました')"></button>
         <button id="triangle" onclick="alert('△が押されました')"></button>
         <button id="cross" onclick="alert('×が押されました')"></button>
