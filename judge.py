@@ -67,13 +67,13 @@ def evaluate_co2(co2):
 def evaluate_overall_score(temp_score, humidity_score, co2_score):
     total_score = temp_score + humidity_score + co2_score
     if total_score == 6:
-        return "◎"
+        return "nijumaru"
     elif 4 <= total_score <= 5:
-        return "〇"
+        return "maru"
     elif 2 <= total_score <= 3:
-        return "△"
+        return "sankaku"
     elif 0 <= total_score <= 1:
-        return "×"
+        return "batu"
 
 msg = {}
 
