@@ -75,7 +75,10 @@ def evaluate_overall_score(temp_score, humidity_score, co2_score):
     elif 0 <= total_score <= 1:
         return "batu"
 
-msg = {}
+# msg.payloadをdict型で初期化
+msg = {
+    "payload": []
+}
 
 res = requests.get('https://proxy.cep-hd-dlp.chuden.co.jp/data-n8suh89sqhcjo5g5/data-api/latest?id=CgETViZ2&subscription-key=0e35a874f02a4887adc1ed0b2561f645') # jikkensituyou
 for i in range(8):
@@ -96,6 +99,11 @@ for i in range(8):
     co2_score = evaluate_co2(co2)
     overall_score = evaluate_overall_score(temp_score, humidity_score, co2_score)
 
-    msg[sensorName] = [temp_score, humidity_score, co2_score, overall_score]
+    msg["payload"].append({
+        "sensorName": sensorName,
+        "temp_score": temp_score,
+        "humidity_score": humidity_score,
+        "co2_score": co2_score,
+        })
 
 print(msg)
