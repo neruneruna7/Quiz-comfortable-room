@@ -77,13 +77,13 @@ def evaluate_overall_score(temp_score, humidity_score, co2_score):
 
 msg = {}
 
-res = requests.get('https://proxy.cep-hd-dlp.chuden.co.jp/data-n8suh89sqhcjo5g5/data-api/latest?id=CgETViZ2&subscription-key=0e35a874f02a4887adc1ed0b2561f645') # 実験室用
+res = requests.get('https://proxy.cep-hd-dlp.chuden.co.jp/data-n8suh89sqhcjo5g5/data-api/latest?id=CgETViZ2&subscription-key=0e35a874f02a4887adc1ed0b2561f645') # jikkensituyou
 for i in range(8):
     res_json = res.json()[i]
     sensorNumber = res_json['sensorNumber']
     sensorName = res_json['sensorName']
     co2 = res_json['co2']
-    if co2 == None: continue # データ無ければ次
+    if co2 == None: continue # non data continue
     print(sensorNumber, sensorName)
     temperature = res_json['temperature']
     relativeHumidity = res_json['relativeHumidity']
@@ -96,11 +96,6 @@ for i in range(8):
     co2_score = evaluate_co2(co2)
     overall_score = evaluate_overall_score(temp_score, humidity_score, co2_score)
 
-    # sensernameごとに，temp_score, humidity_score, co2_score, overall_scoreを格納
     msg[sensorName] = [temp_score, humidity_score, co2_score, overall_score]
-
-    print(f'温度スコア: {temp_score}, 湿度スコア: {humidity_score}, CO2スコア: {co2_score}')
-    print(f'総合評価: {overall_score}')
-    print(f'CO2濃度={co2}[ppm], 気温={temperature}[deg], 相対湿度={relativeHumidity}[%], タイムスタンプ={dt}')
 
 print(msg)
