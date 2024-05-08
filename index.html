@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Comfort Quiz</title>
+    <style>
+        header {
+            background-color: #FFDAB9; /* 柔らかいオレンジ色 */
+            padding: 20px;
+            text-align: center;
+        }
+        .data-display {
+            display: flex;
+            height: 40vh;
+            padding: 40px;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 24px; /* フォントサイズを大きくする */
+        }
+        .quiz-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+        button {
+            font-size: 24px; /* ボタンのフォントサイズを大きくする */
+            height: 150px;
+            width: 150px;
+            padding: 20px 20px; /* ボタンのパディングを増やす */
+            background-color: lightsteelblue;
+            background-repeat: no-repeat; /* 画像を繰り返さない */
+            background-size: contain; /* 画像を要素にフィットさせる */
+            background-position: center; /* 画像を中央に配置 */
+        }
+        button:hover {
+            background-color: lightblue; /* マウスオーバー時の背景色 */
+        }
+        #doublecircle {
+            background-image: url('img/doublecircle.svg'); /* ○の画像 */
+        }
+        #circle {
+            background-image: url('img/circle.svg'); /* ○の画像 */
+        }
+        #triangle {
+            background-image: url('img/triangle.svg'); /* △の画像 */
+        }
+        #cross {
+            background-image: url('img/cross.svg'); /* ×の画像 */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Comfort Quiz</h1>
+    </header>
+
+    <div class="data-display">
+        <div>        
+            <H3>CO2濃度</H3>
+            <div id="co2"></div>
+        </div>
+        <div>        
+            <H3>温度</H3>
+            <div id="temp">温度: </div>
+        </div>
+        <div>        
+            <H3>湿度</H3>
+            <div id="humidity">湿度: </div>
+        </div>
+
+    </div>
+    <div class="quiz-buttons">
+        <button id="doublecircle" onclick="alert('◎が押されました')"></button>
+        <button id="circle" onclick="alert('○が押されました')"></button>
+        <button id="triangle" onclick="alert('△が押されました')"></button>
+        <button id="cross" onclick="alert('×が押されました')"></button>
+    </div>
+
+    <footer>
+        <p>© 2022 Comfort Quiz</p>
+    </footer>
+
+    <script>
+        // JSONデータの例
+        var data = {
+            "co2": 400,
+            "temp": 25,
+            "humidity": 50,
+            "comfort": 4
+        };
+
+        // JSONデータから値を取得し、HTML要素に表示
+        document.getElementById('co2').innerText += data.co2;
+        document.getElementById('temp').innerText += data.temp;
+        document.getElementById('humidity').innerText += data.humidity;
+
+    </script>
+</body>
+</html>
