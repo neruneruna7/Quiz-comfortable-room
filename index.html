@@ -87,9 +87,10 @@
     <script>
         // JSONデータの例
         var data = {
-            "co2": 400,
-            "temp": 25,
-            "humidity": 50,
+            "sensor_name": payload.sensorName,
+            "co2": payload.co2_co2_score,
+            "temp": payload.temp_score,
+            "humidity": payload.humidity_score,
             "comfort": 4
         };
 
