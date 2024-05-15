@@ -87,7 +87,7 @@ for i in range(8):
     sensorName = res_json['sensorName']
     co2 = res_json['co2']
     if co2 == None: continue # non data continue
-    print(sensorNumber, sensorName)
+    # print(sensorNumber, sensorName)
     temperature = res_json['temperature']
     relativeHumidity = res_json['relativeHumidity']
     timestamp = res_json['timestamp']
