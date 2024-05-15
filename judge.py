@@ -101,8 +101,11 @@ for i in range(8):
 
     msg["payload"].append({
         "sensorName": sensorName,
+        "temperature": temperature,
         "temp_score": temp_score,
+        "humidity": relativeHumidity,
         "humidity_score": humidity_score,
+        "co2": co2,
         "co2_score": co2_score,
         })
 
