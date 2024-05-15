@@ -1,0 +1,570 @@
+[
+    {
+        "id": "57cd28fa4bc9c0ce",
+        "type": "tab",
+        "label": "フロー 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c55bbd5f87a9e385",
+        "type": "exec",
+        "z": "57cd28fa4bc9c0ce",
+        "command": "cd ~/Desktop/jikkenn/Quiz-comfortable-room && python3 judge.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 460,
+        "y": 200,
+        "wires": [
+            [
+                "79147b41949dd8c9"
+            ],
+            [
+                "9874676798f1a80a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9874676798f1a80a",
+        "type": "debug",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "79147b41949dd8c9",
+        "type": "template",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n\n<head>\n    <title>Comfort Quiz</title>\n    <style>\n        header {\n            background-color: #FFDAB9;\n            /* 柔らかいオレンジ色 */\n            padding: 20px;\n            text-align: center;\n        }\n\n        .data-display {\n            display: flex;\n            height: 40vh;\n            padding: 40px;\n            justify-content: space-around;\n            margin-bottom: 20px;\n            font-size: 24px;\n            /* フォントサイズを大きくする */\n        }\n\n        .quiz-buttons {\n            display: flex;\n            justify-content: space-around;\n        }\n\n        button {\n            font-size: 24px;\n            /* ボタンのフォントサイズを大きくする */\n            height: 150px;\n            width: 150px;\n            padding: 20px 20px;\n            /* ボタンのパディングを増やす */\n            background-color: lightsteelblue;\n            background-repeat: no-repeat;\n            /* 画像を繰り返さない */\n            background-size: contain;\n            /* 画像を要素にフィットさせる */\n            background-position: center;\n            /* 画像を中央に配置 */\n        }\n\n        button:hover {\n            background-color: lightblue;\n            /* マウスオーバー時の背景色 */\n        }\n\n        svg {\n            width: 100%;\n            height: 100%;\n        }\n\n        .description {\n            font-size: 20px;\n            /* 文字サイズを大きくする */\n            text-align: center;\n            /* 配置を中央にする */\n            border: 2px solid red;\n            /* 目立つボーダーを追加する */\n            padding: 10px;\n            /* ボーダーとテキストの間にスペースを追加する */\n        }\n    </style>\n</head>\n\n<body>\n    <header>\n        <h1>Comfort Quiz</h1>\n    </header>\n    <span style=\"display:none\" id=\"payload\">{{payload}}\n\n    </span>\n    <h1 id=\"sensorName\">センサー名: </h1>\n\n    <div class=\"data-display\">\n        <div>\n            <H3>CO2濃度(ppm)</H3>\n            <div id=\"co2\"></div>\n        </div>\n        <div>\n            <H3>温度(°C)</H3>\n            <div id=\"temp\"> </div>\n        </div>\n        <div>\n            <H3>湿度(%)</H3>\n            <div id=\"humidity\"> </div>\n        </div>\n    </div>\n\n    <div class=\"description\">\n        <p>二重丸: 超快適， 丸: 快適， 三角: 普通， バツ: 不快</p>\n    </div>\n\n    <div class=\"quiz-buttons\">\n        <button id=\"doublecircle\" onclick=\"demo1()\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 50 50\">\n                <circle cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke=\"red\" stroke-width=\"4\" />\n                <circle cx=\"25\" cy=\"25\" r=\"10\" fill=\"none\" stroke=\"red\" stroke-width=\"4\" />\n            </svg>\n        </button>\n        <button id=\"circle\" onclick=\"demo2()\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#FF0000\">\n                <path\n                    d=\"M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\" />\n            </svg>\n\n        </button>\n        <button id=\"triangle\" onclick=\"demo3()\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#FFFF00\">\n                <path d=\"m80-160 400-640 400 640H80Zm144-80h512L480-650 224-240Zm256-205Z\" />\n            </svg>\n\n        </button>\n        <button id=\"cross\" onclick=\"demo4()\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#000000\">\n                <path\n                    d=\"m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z\" />\n            </svg>\n        </button>\n    </div>\n\n    <footer>\n        <p>© 2022 Comfort Quiz</p>\n    </footer>\n\n    <script>\n        let payloadText = document.getElementById('payload').innerText;\n        let payload = JSON.parse(payloadText)\n        // 開発用に型を補助するための変数\n        console.log(payload)\n\n        // payloadの要素数を範囲にした乱数\n        function getRandomInt(min, max) {\n            return Math.floor(Math.random() * (max - min + 1)) + min;\n        }\n\n        // payloadの要素数を範囲にした乱数\n        let len = payload.payload.length;\n        let index = getRandomInt(0, len - 1);\n        //let index = 0\n        // JSONデータの例\n        var data = {\n            \"sensor_name\": payload.payload[index].sensorName,\n            \"co2\": payload.payload[index].co2,\n            \"co2_score\": payload.payload[index].co2_score,\n            \"temperature\": payload.payload[index].temperature,\n            \"temp_score\": payload.payload[index].temp_score,\n            \"humidity\": payload.payload[index].humidity,\n            \"humidity_score\": payload.payload[index].humidity_score,\n        };\n        let comfort = data.co2_score + data.temp_score + data.humidity_score;\n\n\n\n        // JSONデータから値を取得し、HTML要素に表示\n        document.getElementById('sensorName').innerText += data.sensor_name;\n        document.getElementById('co2').innerText += data.co2;\n        document.getElementById('temp').innerText += data.temperature;\n        document.getElementById('humidity').innerText += data.humidity;\n        let judge = ['x', 'x', '△', '△', '⚪︎', '⚪︎', '◎'];\n\n        const beep_url = \"http://192.168.98.115:1880/beep/\"\n        function demo1() {\n            if (comfort == 6) {\n                fetch(`${beep_url}1`)\n                alert(\"正解です！！\")\n            }\n            else {\n                fetch(`${beep_url}2`)\n                alert(`不正解\\n正解は　${judge[comfort]}`)\n            }\n        }\n        function demo2() {\n            if (comfort == 4 || comfort == 5) {\n                fetch(`${beep_url}1`)\n                alert(\"正解です！！\")\n            }\n            else {\n                fetch(`${beep_url}2`)\n                alert(`不正解\\n正解は　${judge[comfort]}`)\n            }\n        }\n        function demo3() {\n            if (comfort == 2 || comfort == 3) {\n                fetch(`${beep_url}1`)\n                alert(\"正解です！！\")\n            }\n            else {\n                fetch(`${beep_url}2`)\n                alert(`不正解\\n正解は　${judge[comfort]}`)\n            }\n        }\n        function demo4() {\n            if (comfort == 0 || comfort == 1) {\n                fetch(`${beep_url}1`)\n                alert(\"正解です！！\")\n            }\n            else {\n                fetch(`${beep_url}2`)\n                alert(`不正解\\n正解は　${judge[comfort]}`)\n            }\n        }\n\n    </script>\n</body>\n\n</html>",
+        "output": "str",
+        "x": 840,
+        "y": 200,
+        "wires": [
+            [
+                "0c4fd84347b5f34f"
+            ]
+        ]
+    },
+    {
+        "id": "0c4fd84347b5f34f",
+        "type": "http response",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1110,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "a15adf756c333673",
+        "type": "http in",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "url": "/p",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "c55bbd5f87a9e385"
+            ]
+        ]
+    },
+    {
+        "id": "0abfb3c606c4bc5a",
+        "type": "ui_switch",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "ca0458241029982d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 270,
+        "y": 600,
+        "wires": [
+            [
+                "c5a302f45e0e27d8"
+            ]
+        ]
+    },
+    {
+        "id": "c5a302f45e0e27d8",
+        "type": "rpi-gpio out",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "pin": "18",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 420,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "c6921c734dd10972",
+        "type": "delay",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 420,
+        "wires": [
+            [
+                "c55583066672d440"
+            ]
+        ]
+    },
+    {
+        "id": "c55583066672d440",
+        "type": "change",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 500,
+        "wires": [
+            [
+                "0abfb3c606c4bc5a"
+            ]
+        ]
+    },
+    {
+        "id": "66d77d91aef72923",
+        "type": "delay",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 110,
+        "y": 460,
+        "wires": [
+            [
+                "0abfb3c606c4bc5a",
+                "c6921c734dd10972"
+            ]
+        ]
+    },
+    {
+        "id": "05f8ba4f4a790e41",
+        "type": "ui_switch",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "ca0458241029982d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 830,
+        "y": 620,
+        "wires": [
+            [
+                "db3e5abb4273670d"
+            ]
+        ]
+    },
+    {
+        "id": "db3e5abb4273670d",
+        "type": "rpi-gpio out",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "pin": "18",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "bcm": true,
+        "x": 980,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "e9465913ea5e5ddb",
+        "type": "delay",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.04",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1050,
+        "y": 420,
+        "wires": [
+            [
+                "98440b226a953b2f"
+            ]
+        ]
+    },
+    {
+        "id": "98440b226a953b2f",
+        "type": "change",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1020,
+        "y": 480,
+        "wires": [
+            [
+                "05f8ba4f4a790e41"
+            ]
+        ]
+    },
+    {
+        "id": "419f863970cafcff",
+        "type": "delay",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 480,
+        "wires": [
+            [
+                "05f8ba4f4a790e41",
+                "13120db2bc718cd3"
+            ]
+        ]
+    },
+    {
+        "id": "13120db2bc718cd3",
+        "type": "delay",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 810,
+        "y": 480,
+        "wires": [
+            [
+                "e9465913ea5e5ddb"
+            ]
+        ]
+    },
+    {
+        "id": "25b215d287dce0c5",
+        "type": "delay",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 100,
+        "y": 520,
+        "wires": [
+            [
+                "c6921c734dd10972",
+                "0abfb3c606c4bc5a"
+            ]
+        ]
+    },
+    {
+        "id": "3dc405accfd711ff",
+        "type": "http in",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "正解のとき",
+        "url": "/beep/1",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 620,
+        "y": 340,
+        "wires": [
+            [
+                "2ab7452c3d128d69"
+            ]
+        ]
+    },
+    {
+        "id": "28fbcfc66c098ffd",
+        "type": "debug",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "7b60b17742ba7502",
+        "type": "debug",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "72eaa58c6798a2ae",
+        "type": "change",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200,
+        "y": 360,
+        "wires": [
+            [
+                "c6921c734dd10972",
+                "66d77d91aef72923",
+                "25b215d287dce0c5",
+                "7b60b17742ba7502",
+                "0abfb3c606c4bc5a"
+            ]
+        ]
+    },
+    {
+        "id": "fff2dc5e44a6dfe0",
+        "type": "http in",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "不正解",
+        "url": "/beep/2",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 50,
+        "y": 360,
+        "wires": [
+            [
+                "72eaa58c6798a2ae"
+            ]
+        ]
+    },
+    {
+        "id": "2ab7452c3d128d69",
+        "type": "change",
+        "z": "57cd28fa4bc9c0ce",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 340,
+        "wires": [
+            [
+                "e9465913ea5e5ddb",
+                "419f863970cafcff",
+                "28fbcfc66c098ffd",
+                "05f8ba4f4a790e41"
+            ]
+        ]
+    },
+    {
+        "id": "ca0458241029982d",
+        "type": "ui_group",
+        "name": "デフォルト",
+        "tab": "cbef755f7ed41463",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cbef755f7ed41463",
+        "type": "ui_tab",
+        "name": "ホーム",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

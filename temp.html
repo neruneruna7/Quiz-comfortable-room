@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Comfort Quiz</title>
+    <style>
+        header {
+            background-color: #FFDAB9;
+            /* 柔らかいオレンジ色 */
+            padding: 20px;
+            text-align: center;
+        }
+
+        .data-display {
+            display: flex;
+            height: 40vh;
+            padding: 40px;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 24px;
+            /* フォントサイズを大きくする */
+        }
+
+        .quiz-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        button {
+            font-size: 24px;
+            /* ボタンのフォントサイズを大きくする */
+            height: 150px;
+            width: 150px;
+            padding: 20px 20px;
+            /* ボタンのパディングを増やす */
+            background-color: lightsteelblue;
+            background-repeat: no-repeat;
+            /* 画像を繰り返さない */
+            background-size: contain;
+            /* 画像を要素にフィットさせる */
+            background-position: center;
+            /* 画像を中央に配置 */
+        }
+
+        button:hover {
+            background-color: lightblue;
+            /* マウスオーバー時の背景色 */
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .description {
+            font-size: 20px;
+            /* 文字サイズを大きくする */
+            text-align: center;
+            /* 配置を中央にする */
+            border: 2px solid red;
+            /* 目立つボーダーを追加する */
+            padding: 10px;
+            /* ボーダーとテキストの間にスペースを追加する */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Comfort Quiz</h1>
+    </header>
+    <span style="display:none" id="payload">{{payload}}
+
+    </span>
+    <h1 id="sensorName">センサー名: </h1>
+
+    <div class="data-display">
+        <div>
+            <H3>CO2濃度(ppm)</H3>
+            <div id="co2"></div>
+        </div>
+        <div>
+            <H3>温度(°C)</H3>
+            <div id="temp"> </div>
+        </div>
+        <div>
+            <H3>湿度(%)</H3>
+            <div id="humidity"> </div>
+        </div>
+    </div>
+
+    <div class="description">
+        <p>二重丸: 超快適， 丸: 快適， 三角: 普通， バツ: 不快</p>
+    </div>
+
+    <div class="quiz-buttons">
+        <button id="doublecircle" onclick="demo1()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="20" fill="none" stroke="red" stroke-width="4" />
+                <circle cx="25" cy="25" r="10" fill="none" stroke="red" stroke-width="4" />
+            </svg>
+        </button>
+        <button id="circle" onclick="demo2()">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FF0000">
+                <path
+                    d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+            </svg>
+
+        </button>
+        <button id="triangle" onclick="demo3()">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFF00">
+                <path d="m80-160 400-640 400 640H80Zm144-80h512L480-650 224-240Zm256-205Z" />
+            </svg>
+
+        </button>
+        <button id="cross" onclick="demo4()">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+                <path
+                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            </svg>
+        </button>
+    </div>
+
+    <footer>
+        <p>© 2022 Comfort Quiz</p>
+    </footer>
+
+    <script>
+        let payloadText = document.getElementById('payload').innerText;
+        let payload = JSON.parse(payloadText)
+        // 開発用に型を補助するための変数
+        console.log(payload)
+
+        // payloadの要素数を範囲にした乱数
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // payloadの要素数を範囲にした乱数
+        let len = payload.payload.length;
+        let index = getRandomInt(0, len - 1);
+        //let index = 0
+        // JSONデータの例
+        var data = {
+            "sensor_name": payload.payload[index].sensorName,
+            "co2": payload.payload[index].co2,
+            "co2_score": payload.payload[index].co2_score,
+            "temperature": payload.payload[index].temperature,
+            "temp_score": payload.payload[index].temp_score,
+            "humidity": payload.payload[index].humidity,
+            "humidity_score": payload.payload[index].humidity_score,
+        };
+        let comfort = data.co2_score + data.temp_score + data.humidity_score;
+
+
+
+        // JSONデータから値を取得し、HTML要素に表示
+        document.getElementById('sensorName').innerText += data.sensor_name;
+        document.getElementById('co2').innerText += data.co2;
+        document.getElementById('temp').innerText += data.temperature;
+        document.getElementById('humidity').innerText += data.humidity;
+        let judge = ['x', 'x', '△', '△', '⚪︎', '⚪︎', '◎'];
+
+        const beep_url = "http://192.168.98.115:1880/beep/"
+        function demo1() {
+            if (comfort == 6) {
+                fetch(`${beep_url}1`)
+                alert("正解です！！")
+            }
+            else {
+                fetch(`${beep_url}2`)
+                alert(`不正解\n正解は　${judge[comfort]}`)
+            }
+        }
+        function demo2() {
+            if (comfort == 4 || comfort == 5) {
+                fetch(`${beep_url}1`)
+                alert("正解です！！")
+            }
+            else {
+                fetch(`${beep_url}2`)
+                alert(`不正解\n正解は　${judge[comfort]}`)
+            }
+        }
+        function demo3() {
+            if (comfort == 2 || comfort == 3) {
+                fetch(`${beep_url}1`)
+                alert("正解です！！")
+            }
+            else {
+                fetch(`${beep_url}2`)
+                alert(`不正解\n正解は　${judge[comfort]}`)
+            }
+        }
+        function demo4() {
+            if (comfort == 0 || comfort == 1) {
+                fetch(`${beep_url}1`)
+                alert("正解です！！")
+            }
+            else {
+                fetch(`${beep_url}2`)
+                alert(`不正解\n正解は　${judge[comfort]}`)
+            }
+        }
+
+    </script>
+</body>
+
+</html>

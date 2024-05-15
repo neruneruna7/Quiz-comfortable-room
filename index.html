@@ -1,87 +1,133 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Comfort Quiz</title>
     <style>
         header {
-            background-color: #FFDAB9; /* 柔らかいオレンジ色 */
+            background-color: #FFDAB9;
+            /* 柔らかいオレンジ色 */
             padding: 20px;
             text-align: center;
         }
+
         .data-display {
             display: flex;
             height: 40vh;
             padding: 40px;
             justify-content: space-around;
             margin-bottom: 20px;
-            font-size: 24px; /* フォントサイズを大きくする */
+            font-size: 24px;
+            /* フォントサイズを大きくする */
         }
+
         .quiz-buttons {
             display: flex;
             justify-content: space-around;
         }
+
         button {
-            font-size: 24px; /* ボタンのフォントサイズを大きくする */
+            font-size: 24px;
+            /* ボタンのフォントサイズを大きくする */
             height: 150px;
             width: 150px;
-            padding: 20px 20px; /* ボタンのパディングを増やす */
+            padding: 20px 20px;
+            /* ボタンのパディングを増やす */
             background-color: lightsteelblue;
-            background-repeat: no-repeat; /* 画像を繰り返さない */
-            background-size: contain; /* 画像を要素にフィットさせる */
-            background-position: center; /* 画像を中央に配置 */
+            background-repeat: no-repeat;
+            /* 画像を繰り返さない */
+            background-size: contain;
+            /* 画像を要素にフィットさせる */
+            background-position: center;
+            /* 画像を中央に配置 */
         }
+
         button:hover {
-            background-color: lightblue; /* マウスオーバー時の背景色 */
+            background-color: lightblue;
+            /* マウスオーバー時の背景色 */
         }
+
+        /* 
         #doublecircle {
-            background-image: url('img/doublecircle.svg'); /* ○の画像 */
+            background-image: url('img/doublecircle.svg');
         }
+
         #circle {
-            background-image: url('img/circle.svg'); /* ○の画像 */
+            background-image: url('img/circle.svg');
         }
+
         #triangle {
-            background-image: url('img/triangle.svg'); /* △の画像 */
+            background-image: url('img/triangle.svg');
         }
+
         #cross {
-            background-image: url('img/cross.svg'); /* ×の画像 */
+            background-image: url('img/cross.svg');
+        } */
+
+        svg {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Comfort Quiz</h1>
     </header>
+    <!-- payloadを受け取るための -->
+    <span style="display: none;">{{payload}}</span>
+    <!-- その他の<body>内の要素 -->
 
     <div class="data-display">
         <div>
             <H3>センサ名</H3>
             <div id="sensor"></div>
         </div>
-        <div>        
+        <div>
             <H3>CO2濃度</H3>
             <div id="co2"></div>
         </div>
-        <div>        
+        <div>
             <H3>温度</H3>
             <div id="temp">温度: </div>
         </div>
-        <div>        
+        <div>
             <H3>湿度</H3>
             <div id="humidity">湿度: </div>
         </div>
 
         <div>
             <H3>でばっぐ！</H3>
-            <div id="comfort">{{payload}}</div>
+            <div id="comfort">{{payload.payload}}</div>
         </div>
 
 
     </div>
     <div class="quiz-buttons">
-        <button id="doublecircle" onclick="alert('◎が押されました')"></button>
-        <button id="circle" onclick="alert('○が押されました')"></button>
-        <button id="triangle" onclick="alert('△が押されました')"></button>
-        <button id="cross" onclick="alert('×が押されました')"></button>
+        <button id="doublecircle" onclick="alert('◎が押されました')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="20" fill="none" stroke="red" stroke-width="4" />
+                <circle cx="25" cy="25" r="10" fill="none" stroke="red" stroke-width="4" />
+            </svg>
+        </button>
+        <button id="circle" onclick="alert('○が押されました')">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FF0000">
+                <path
+                    d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+            </svg>
+        </button>
+        <button id="triangle" onclick="alert('△が押されました')">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFF00">
+                <path d="m80-160 400-640 400 640H80Zm144-80h512L480-650 224-240Zm256-205Z" />
+            </svg>
+        </button>
+        <button id="cross" onclick="demo()">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000">
+                <path
+                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+            </svg>
+        </button>
     </div>
 
     <footer>
@@ -92,32 +138,51 @@
         // 開発用に型を補助するための変数
         let payload = [
             {
-                'sensorName': 'Ｒ３ー４０１', 
-                'temp_score': 1, 
-                'humidity_score': 2, 
+                'sensorName': 'Ｒ３ー４０１',
+                'temp_score': 1,
+                'humidity_score': 2,
                 'co2_score': 1
             }, {
-                'sensorName': 'Ｒ３ー４０３', 
-                'temp_score': 1, 
-                'humidity_score': 2, 
+                'sensorName': 'Ｒ３ー４０３',
+                'temp_score': 1,
+                'humidity_score': 2,
                 'co2_score': 1
             }, {
-                'sensorName': 'Ｒ３ー３０１', 
-                'temp_score': 1, 
-                'humidity_score': 2, 
+                'sensorName': 'Ｒ３ー３０１',
+                'temp_score': 1,
+                'humidity_score': 2,
                 'co2_score': 2
             }, {
-                'sensorName': 'Ｒ３ー４Ｆ_ＥＨ', 
-                'temp_score': 1, 
-                'humidity_score': 1, 
+                'sensorName': 'Ｒ３ー４Ｆ_ＥＨ',
+                'temp_score': 1,
+                'humidity_score': 1,
                 'co2_score': 2
-            }, {'sensorName': 'Ｒ３ー３Ｆ_ＥＨ', 'temp_score': 1, 'humidity_score': 2, 'co2_score': 2}, {'sensorName': 'Ｒ３ー１Ｆ_ＥＨ', 'temp_score': 1, 'humidity_score': 2, 'co2_score': 2}, {'sensorName': 'Ｒ３ーB１Ｆ_ＥＨ', 'temp_score': 2, 'humidity_score': 2, 'co2_score': 2}
+            }, { 'sensorName': 'Ｒ３ー３Ｆ_ＥＨ', 'temp_score': 1, 'humidity_score': 2, 'co2_score': 2 }, { 'sensorName': 'Ｒ３ー１Ｆ_ＥＨ', 'temp_score': 1, 'humidity_score': 2, 'co2_score': 2 }, { 'sensorName': 'Ｒ３ーB１Ｆ_ＥＨ', 'temp_score': 2, 'humidity_score': 2, 'co2_score': 2 }
         ]
 
         // payloadの要素数を範囲にした乱数
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
+
+        // テスト用のダミーデータ
+        const dummyData = "{\"payload\": [{\"sensorName\": \"\uff32\uff13\u30fc\uff14\uff10\uff11\", \"temperature\": 25.3, \"temp_score\": 1, \"humidity\": 53.7, \"humidity_score\": 2, \"co2\": 638.0, \"co2_score\": 1}, {\"sensorName\": \"\uff32\uff13\u30fc\uff14\uff10\uff13\", \"temperature\": 24.7, \"temp_score\": 1, \"humidity\": 55.3, \"humidity_score\": 2, \"co2\": 626.0, \"co2_score\": 1}, {\"sensorName\": \"\uff32\uff13\u30fc\uff13\uff10\uff11\", \"temperature\": 25.3, \"temp_score\": 1, \"humidity\": 51.9, \"humidity_score\": 2, \"co2\": 548.0, \"co2_score\": 1}, {\"sensorName\": \"\uff32\uff13\u30fc\uff14\uff26_\uff25\uff28\", \"temperature\": 25.5, \"temp_score\": 1, \"humidity\": 48.9, \"humidity_score\": 2, \"co2\": 479.0, \"co2_score\": 2}, {\"sensorName\": \"\uff32\uff13\u30fc\uff13\uff26_\uff25\uff28\", \"temperature\": 25.2, \"temp_score\": 1, \"humidity\": 51.7, \"humidity_score\": 2, \"co2\": 473.0, \"co2_score\": 2}, {\"sensorName\": \"\uff32\uff13\u30fc\uff11\uff26_\uff25\uff28\", \"temperature\": 23.2, \"temp_score\": 2, \"humidity\": 53.8, \"humidity_score\": 2, \"co2\": 472.0, \"co2_score\": 2}, {\"sensorName\": \"\uff32\uff13\u30fcB\uff11\uff26_\uff25\uff28\", \"temperature\": 22.7, \"temp_score\": 2, \"humidity\": 60.7, \"humidity_score\": 1, \"co2\": 478.0, \"co2_score\": 2}]}";
+
+        // // テスト関数
+        // function testJsonParse() {
+        //     let parsedData = JSON.parse(dummyData);
+        //     console.log(parsedData);
+        //     // if (parsedData.key1 === "value1" && parsedData.key2 === "value2") {
+        //     //     console.log("テスト成功: JSONパースが正しく行われました。");
+        //     // } else {
+        //     //     console.log("テスト失敗: JSONパースが正しく行われませんでした。");
+        //     // }
+        // }
+
+        // // テストの実行
+        // testJsonParse();
+
+        let parsedData = JSON.parse(dummyData);
 
         // payloadの要素数を範囲にした乱数
         let len = payload.length;
@@ -132,6 +197,14 @@
             "comfort": 4
         };
 
+        function demo() {
+            fetch('http://httpbin.org/json')
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch((error) => console.error('Error:', error));
+            alert(`デモモードです。 ${data.comfort}`);
+        }
+
         // JSONデータから値を取得し、HTML要素に表示
         document.getElementById('sensor').innerText += data.sensor_name;
         document.getElementById('co2').innerText += data.co2;
@@ -140,4 +213,5 @@
 
     </script>
 </body>
+
 </html>
