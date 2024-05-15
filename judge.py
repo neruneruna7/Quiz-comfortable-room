@@ -1,5 +1,6 @@
 import requests
 import datetime
+import json
 
 def evaluate_temperature_and_humidity(month, temperature, humidity):
     if month in range(3, 6):  # March to May
@@ -109,4 +110,4 @@ for i in range(8):
         "co2_score": co2_score,
         })
 
-print(msg)
+print(json.dumps(msg))
